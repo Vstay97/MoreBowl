@@ -41,18 +41,18 @@ public class LoginCheckFilter implements Filter {
 
         // 3. 如果不需要处理,直接放行
         if (check(urls, requestURI)){
-            log.info("不需要处理,直接放行: {}", requestURI);
+            // log.info("不需要处理,直接放行: {}", requestURI);
             filterChain.doFilter(request, response);
             return;
         };
         // 4. 判断登录状态,如果已登录,直接放行
         if (request.getSession().getAttribute("employee")!=null){
-            log.info("已登录,直接放行 用户ID为: {}", request.getSession().getAttribute("employee"));
+            // log.info("已登录,直接放行 用户ID为: {}", request.getSession().getAttribute("employee"));
             filterChain.doFilter(request,response);
             return;
         }
 
-        log.info("未登录,跳转到登录页面");
+        // log.info("未登录,跳转到登录页面");
         // 5. 如果未登录, 返回未登录结果. 通过输出流方式向客户端页面响应数据
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
         return;
