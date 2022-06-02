@@ -101,6 +101,14 @@ public class EmployeeController {
         return R.success("保存成功");
     }
 
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @param pageSize
+     * @param name
+     * @return
+     */
     @GetMapping("/page")
     public R<IPage> page(int page, int pageSize, String name) {
         // 构造分页构造器
@@ -114,4 +122,16 @@ public class EmployeeController {
         employeeService.page(pageInfo, queryWrapper);
         return R.success(pageInfo);
     }
+
+    @PutMapping
+    public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
+        Long empId = (Long) request.getSession().getAttribute("employee");
+
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(empId);
+        employeeService.updateById(employee);
+
+        return R.success("员工信息修改成功");
+    }
+
 }
