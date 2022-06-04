@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.UUID;
 
 /**
@@ -24,7 +25,6 @@ public class CommonController {
 
     @Value("${moreBowl.path}")
     private String BasePath;
-
 
     @PostMapping("/upload")
     public R<String> upload(MultipartFile file) {
@@ -49,4 +49,28 @@ public class CommonController {
 
         return R.success(fileName);
     }
+
+    public void download(String name, HttpServletResponse response) {
+        try {
+            // 输入流, 通过输入流获取文件内容
+            InputStream fileInputStream = new FileInputStream(new File(BasePath + name));
+            // 输出流, 将文件内容写回浏览器, 在浏览器展示图片
+            OutputStream outputStream = response.getOutputStream();
+
+            response.setContentType("image/jpeg");
+
+            // 写入文件内容
+            int len = 0;
+            byte[] buffer = new byte[1024];
+            while ((len = fileInputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, len);
+                outputStream.flush();
+            }
+            fileInputStream.close();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
