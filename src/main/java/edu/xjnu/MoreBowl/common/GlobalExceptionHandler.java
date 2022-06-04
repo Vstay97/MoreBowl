@@ -27,4 +27,10 @@ public class GlobalExceptionHandler {
         }
         return R.error("操作失败");
     }
+
+    @ExceptionHandler(CustomException.class)
+    public R<String> CustomExceptionHandler(CustomException ex) {
+        log.error("CustomException", ex.getMessage());
+        return R.error(ex.getMessage());
+    }
 }

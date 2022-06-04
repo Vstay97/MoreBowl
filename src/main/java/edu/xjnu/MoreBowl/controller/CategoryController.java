@@ -54,13 +54,16 @@ public class CategoryController {
     @DeleteMapping()
     // 前端传过来的是'ids', 不是'id'
     public R<String> delete(Long ids) {
-        boolean res = categoryService.removeById(ids);
-        if (res) {
-            return R.success("删除成功");
-        }
-        else{
-            return R.error("删除失败");
-        }
+        // boolean res = categoryService.removeById(ids);
+        // if (res) {
+        //     return R.success("删除成功");
+        // }
+        // else{
+        //     return R.error("删除失败");
+        // }
+
+        categoryService.remove(ids);
+        return R.success("删除成功");
     }
 }
 
