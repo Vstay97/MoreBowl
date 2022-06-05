@@ -3,6 +3,7 @@ package edu.xjnu.MoreBowl.controller;
 import edu.xjnu.MoreBowl.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +51,7 @@ public class CommonController {
         return R.success(fileName);
     }
 
+    @GetMapping("download")
     public void download(String name, HttpServletResponse response) {
         try {
             // 输入流, 通过输入流获取文件内容
